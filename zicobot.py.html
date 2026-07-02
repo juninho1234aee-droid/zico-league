@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ZICO WORLD LIGA</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+:root{--gold:#FFD700;--gold2:#FFA500;--dark:#0a0a0f;--dark2:#111118;--card:#16161f;--card2:#1c1c28;
+  --acc:#7c3aed;--acc2:#a855f7;--green:#22c55e;--red:#ef4444;--text:#e2e8f0;--muted:#64748b;--border:#2a2a3a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+#loader{position:fixed;inset:0;background:var(--dark);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;z-index:999;gap:14px;}
+.li{font-size:58px;animation:pu 1s ease-in-out infinite alternate;}
+@keyframes pu{from{transform:scale(1)}to{transform:scale(1.1)}}
+.lb{width:180px;height:3px;background:var(--border);border-radius:99px;overflow:hidden;}
+.lf{height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--gold));border-radius:99px;transition:width .4s;}
+.topbar{background:var(--dark2);border-bottom:1px solid var(--border);padding:11px 13px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--dark2);border-top:1px solid var(--border);display:flex;z-index:100;}
+.nb{flex:1;padding:9px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;border:none;background:none;color:var(--muted);font-size:10px;font-family:'Inter',sans-serif;transition:color .2s;}
+.nb.on{color:var(--gold);}
+.nb svg{width:20px;height:20px;}
+.page{display:none;padding:12px 12px 86px;}
+.hero{background:linear-gradient(135deg,#1a0a2e,#16161f);border:1px solid var(--border);
+  border-radius:16px;padding:18px 13px;text-align:center;margin-bottom:11px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(124,58,237,.07),transparent 60%);}
+.ht{font-family:'Rajdhani',sans-serif;font-size:25px;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px;}
+.hs{font-size:12px;color:var(--muted);margin-bottom:11px;}
+.sbox{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);border-radius:12px;
+  padding:11px 13px;margin-bottom:11px;text-align:center;}
+.sn{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;color:var(--acc2);margin-bottom:3px;}
+.sc{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:var(--gold);line-height:1;}
+.sl{font-size:11px;color:var(--muted);margin-top:2px;}
+.sbg{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:600;}
+.sbg.active{background:rgba(34,197,94,.13);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.sbg.wait{background:rgba(251,191,36,.13);color:#fbbf24;border:1px solid rgba(251,191,36,.3);}
+.sbg.end{background:rgba(100,116,139,.13);color:var(--muted);border:1px solid var(--border);}
+.sbg.maint{background:rgba(239,68,68,.13);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.sdot{width:6px;height:6px;border-radius:50%;animation:bl 1.2s infinite;}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:13px;margin-bottom:10px;}
+.ct{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;margin-bottom:9px;}
+.btn{width:100%;padding:12px;border-radius:12px;border:none;font-size:14px;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;}
+.btn:disabled{opacity:.4;cursor:default;}
+.btn:hover:not(:disabled){opacity:.88;}
+.bg{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;}
+.ba{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;}
+.br{background:rgba(239,68,68,.13);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.bm{background:rgba(100,116,139,.12);color:var(--muted);border:1px solid var(--border);}
+.brow{display:flex;gap:8px;}.brow .btn{flex:1;}
+.mcard{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(168,85,247,.05));
+  border:1px solid rgba(124,58,237,.35);border-radius:13px;padding:13px;margin-bottom:10px;}
+.vsrow{display:flex;align-items:center;justify-content:center;gap:9px;margin:9px 0;}
+.pch{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.pvs{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-radius:7px;
+  padding:5px 10px;font-size:12px;font-weight:700;flex-shrink:0;}
+.qcard{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.3);
+  border-radius:13px;padding:13px;margin-bottom:10px;text-align:center;}
+.qsp{font-size:28px;animation:sp 2s linear infinite;display:inline-block;}
+@keyframes sp{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.rlist{display:flex;flex-direction:column;gap:7px;}
+.rrow{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:10px 11px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:border-color .2s;}
+.rrow:hover{border-color:rgba(124,58,237,.4);}
+.rrow.me{border-color:rgba(124,58,237,.5);background:rgba(124,58,237,.06);}
+.rrow.t1{border-color:rgba(255,215,0,.4);}
+.rrow.t2{border-color:rgba(192,192,192,.3);}
+.rrow.t3{border-color:rgba(205,127,50,.3);}
+.rnum{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;width:22px;text-align:center;color:var(--muted);flex-shrink:0;}
+.rnum.r1{color:var(--gold)}.rnum.r2{color:#C0C0C0}.rnum.r3{color:#CD7F32}
+.rinfo{flex:1;min-width:0;}
+.rname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rpts{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);flex-shrink:0;}
+.phead{background:linear-gradient(135deg,#1a0a2e,#16161f);border:1px solid var(--border);
+  border-radius:16px;padding:20px 13px;text-align:center;margin-bottom:10px;}
+.pname{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;}
+.prank{font-size:12px;color:var(--muted);margin-top:2px;}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
+.sc2{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 5px;text-align:center;}
+.sn2{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;}
+.sl2{font-size:10px;color:var(--muted);margin-top:1px;}
+.ir{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.ir:last-child{border:none;}.il{color:var(--muted);}.iv{font-weight:600;}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.astat{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:13px;text-align:center;}
+.asn{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--gold);}
+.asl{font-size:11px;color:var(--muted);margin-top:3px;}
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;}
+.mbg.show{opacity:1;pointer-events:all;}
+.msh{background:var(--card2);border-radius:20px 20px 0 0;padding:20px;width:100%;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}
+.mbg.show .msh{transform:translateY(0);}
+.sinps{display:flex;align-items:center;gap:9px;margin:11px 0;}
+.sinp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;
+  padding:10px;text-align:center;font-size:26px;font-weight:700;color:var(--text);outline:none;width:100%;}
+.sinp:focus{border-color:var(--acc);}
+.ssep{font-size:20px;font-weight:700;color:var(--muted);}
+.pmbg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:250;display:flex;align-items:center;
+  justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;padding:18px;}
+.pmbg.show{opacity:1;pointer-events:all;}
+.pmcard{background:var(--card2);border-radius:18px;padding:22px;width:100%;max-width:320px;transform:scale(.93);transition:transform .25s;}
+.pmbg.show .pmcard{transform:scale(1);}
+.toast{position:fixed;top:65px;left:50%;transform:translateX(-50%) translateY(-14px);
+  background:var(--card2);border:1px solid var(--border);border-radius:10px;
+  padding:8px 15px;font-size:12px;z-index:300;opacity:0;transition:all .25s;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.empty{text-align:center;padding:34px 13px;color:var(--muted);}
+.ei{font-size:38px;margin-bottom:9px;}
+.av{border-radius:50%;object-fit:cover;border:2px solid var(--acc);}
+.avph{border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;font-weight:700;}
+.maint-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);
+  border-radius:13px;padding:16px;text-align:center;margin-bottom:10px;}
+</style>
+</head>
+<body>
+<div id="loader"><div class="li">🏆</div>
+  <div style="font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;
+    background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    ZICO WORLD LIGA</div>
+  <div class="lb"><div class="lf" id="lf"></div></div>
+</div>
+ 
+<div class="topbar" id="topbar" style="display:none">
+  <div class="logo">🏆 ZICO WORLD LIGA</div>
+  <div id="tav"></div>
+</div>
+ 
+<!-- HOME -->
+<div class="page" id="p0">
+  <div class="hero">
+    <div class="ht">ZICO WORLD LIGA</div>
+    <div class="hs">Online futbol chempionati · eFootball 1vs1</div>
+    <div id="sbadge"></div>
+  </div>
+  <div class="sbox"><div class="sn" id="sn">1-MAVSUM</div><div class="sc" id="scd">--:--:--</div><div class="sl" id="slbl">...</div></div>
+  <div id="maintbox"></div>
+  <div id="mblock"></div>
+  <div id="qblock"></div>
+  <div id="hact"></div>
+  <div class="card">
+    <div class="ct">📊 Ball tizimi</div>
+    <div class="ir"><span class="il">🏆 G'alaba</span><span class="iv" style="color:var(--green)">+15 ball</span></div>
+    <div class="ir"><span class="il">🤝 Durang</span><span class="iv" style="color:#fbbf24">+5 ball</span></div>
+    <div class="ir"><span class="il">❌ Mag'lubiyat</span><span class="iv" style="color:var(--red)">-10 ball</span></div>
+  </div>
+</div>
+ 
+<!-- RATING -->
+<div class="page" id="p1">
+  <div class="ct" style="margin-bottom:11px;">🏅 Reyting</div>
+  <div class="rlist" id="rlist"><div class="empty"><div class="ei">⏳</div><div>Yuklanmoqda...</div></div></div>
+</div>
+ 
+<!-- PROFILE -->
+<div class="page" id="p2">
+  <div id="pcon"><div class="empty"><div class="ei">⏳</div><div>Yuklanmoqda...</div></div></div>
+</div>
+ 
+<!-- ADMIN -->
+<div class="page" id="p3">
+  <div class="ct">👑 Admin panel</div>
+  <div class="agrid">
+    <div class="astat"><div class="asn" id="aT">—</div><div class="asl">A'zolar</div></div>
+    <div class="astat"><div class="asn" id="aM">—</div><div class="asl">O'yinlar</div></div>
+    <div class="astat"><div class="asn" id="aD">—</div><div class="asl">Tugallangan</div></div>
+    <div class="astat"><div class="asn" id="aQ">—</div><div class="asl">Navbatda</div></div>
+  </div>
+  <div id="adminActs" style="display:flex;flex-direction:column;gap:8px;"></div>
+</div>
+ 
+<!-- BOTTOM NAV -->
+<div class="bnav" id="bnav" style="display:none">
+  <button class="nb on" id="nb0" onclick="sp(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Bosh</button>
+  <button class="nb" id="nb1" onclick="sp(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Reyting</button>
+  <button class="nb" id="nb2" onclick="sp(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profil</button>
+  <button class="nb" id="nb3" onclick="sp(3)" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Admin</button>
+</div>
+ 
+<!-- SCORE MODAL -->
+<div class="mbg" id="sm"><div class="msh">
+  <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;margin-bottom:2px;">⚽ Hisob kiritish</div>
+  <div style="font-size:12px;color:var(--muted);" id="sminfo"></div>
+  <div class="sinps"><input class="sinp" id="sme" type="number" min="0" max="99" placeholder="0"><span class="ssep">—</span><input class="sinp" id="sopp" type="number" min="0" max="99" placeholder="0"></div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:12px;">Chap: Siz | O'ng: Raqib</div>
+  <div class="brow"><button class="btn ba" style="flex:2" onclick="submitScore()">✅ Yuborish</button><button class="btn bm" style="flex:1" onclick="closeSM()">Bekor</button></div>
+</div></div>
+ 
+<!-- PLAYER MODAL -->
+<div class="pmbg" id="pm" onclick="closePM(event)"><div class="pmcard" id="pmcard"></div></div>
+ 
+<div class="toast" id="toast"></div>
+ 
+<script>
+const SB_URL="https://wfpspsiikwdxmatavwwm.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcHNwc2lpa3dkeG1hdGF2d3dtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MjYwMTcsImV4cCI6MjA5ODQwMjAxN30.a48U3deN-0Kjg3FC4Edy-m3Z71ru-LyHuohkFwkEyfw";
+const ADMIN_ID=1590570666;
+const S_START=new Date("2026-07-03T07:00:00+05:00");
+ 
+let tgUser=null,myMatch=null,inQueue=false,isReg=false,snum=1,isMaint=false,seasonEnded=false;
+ 
+async function db(t,m="GET",b=null,p=""){
+  const u=`${SB_URL}/rest/v1/${t}${p}`;
+  const h={"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Content-Type":"application/json",
+    "Prefer":m==="POST"?"resolution=merge-duplicates,return=representation":m==="PATCH"?"return=representation":""};
+  const r=await fetch(u,{method:m,headers:h,body:b?JSON.stringify(b):undefined});
+  const tx=await r.text();try{return tx?JSON.parse(tx):[]}catch{return[]}
+}
+ 
+function today(){const n=new Date();return`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
+function fmtTime(s){const d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),mn=Math.floor((s%3600)/60),sc=s%60;
+  if(d>0)return`${d}k ${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}`;
+  return`${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;}
+ 
+function showToast(msg,dur=2500){const e=document.getElementById("toast");e.textContent=msg;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),dur);}
+ 
+function avEl(url,name,sz=42){
+  if(url)return`<img src="${url}" class="av" style="width:${sz}px;height:${sz}px;" onerror="this.style.display='none'">`;
+  const i=(name||"?").charAt(0).toUpperCase();
+  return`<div class="avph" style="width:${sz}px;height:${sz}px;font-size:${Math.floor(sz*.36)}px;">${i}</div>`;}
+ 
+function updateSeason(){
+  const now=new Date();
+  const badge=document.getElementById("sbadge");
+  const cd=document.getElementById("scd");
+  const lbl=document.getElementById("slbl");
+  document.getElementById("sn").textContent=`${snum}-MAVSUM`;
+ 
+  if(isMaint){
+    badge.innerHTML=`<span class="sbg maint">🔧 Texnik ishlar</span>`;
+    cd.textContent="—";lbl.textContent="11:30 gacha kuting";return;
+  }
+  if(seasonEnded){
+    badge.innerHTML=`<span class="sbg end">Tugadi</span>`;
+    cd.textContent="—";lbl.textContent="Yangi mavsum kutilmoqda";return;
+  }
+  if(now<S_START){
+    const d=Math.floor((S_START-now)/1000);
+    badge.innerHTML=`<span class="sbg wait"><span class="sdot" style="background:#fbbf24"></span>Kutilmoqda</span>`;
+    cd.textContent=fmtTime(d);lbl.textContent="Boshlanishiga";
+  }else{
+    badge.innerHTML=`<span class="sbg active"><span class="sdot" style="background:var(--green)"></span>FAOL</span>`;
+    const nextMonth=new Date(S_START);nextMonth.setMonth(nextMonth.getMonth()+1);
+    const d=Math.max(0,Math.floor((nextMonth-now)/1000));
+    cd.textContent=fmtTime(d);lbl.textContent="Mavsum tugashiga";
+  }
+}
+ 
+function sp(idx){
+  for(let i=0;i<4;i++){const e=document.getElementById(`p${i}`);if(e)e.style.display=i===idx?"block":"none";}
+  document.querySelectorAll(".nb").forEach((b,i)=>b.classList.toggle("on",i===idx));
+  if(idx===1)loadRating();if(idx===2)loadProfile();if(idx===3)loadAdmin();
+}
+ 
+async function loadHome(){
+  if(!tgUser)return;
+  const uid=tgUser.id;
+  const[mr,qr,rr,mn,sr]=await Promise.all([
+    db("matches","GET",null,`?or=(player1_id.eq.${uid},player2_id.eq.${uid})&status=neq.done&order=id.desc&limit=1`),
+    db("queue","GET",null,`?user_id=eq.${uid}`),
+    db("registrations","GET",null,`?user_id=eq.${uid}&season_num=eq.${snum}`),
+    db("maintenance","GET",null,"?id=eq.1"),
+    db("seasons","GET",null,"?order=id.desc&limit=1")
+  ]);
+  myMatch=mr&&mr.length>0?mr[0]:null;
+  inQueue=qr&&qr.length>0;
+  isReg=rr&&rr.length>0;
+  isMaint=mn&&mn[0]?mn[0].active:false;
+  const season=sr&&sr[0]?sr[0]:{id:1,status:"active"};
+  snum=season.id;
+  seasonEnded=season.status==="ended";
+ 
+  if(myMatch){
+    const[p1r,p2r]=await Promise.all([
+      db("users","GET",null,`?id=eq.${myMatch.player1_id}&select=username,photo_url`),
+      db("users","GET",null,`?id=eq.${myMatch.player2_id}&select=username,photo_url`)
+    ]);
+    myMatch.p1n=p1r&&p1r[0]?p1r[0].username:"?";myMatch.p2n=p2r&&p2r[0]?p2r[0].username:"?";
+    myMatch.p1ph=p1r&&p1r[0]?p1r[0].photo_url:null;myMatch.p2ph=p2r&&p2r[0]?p2r[0].photo_url:null;
+  }
+  renderHome();
+}
+ 
+function renderHome(){
+  const uid=tgUser?tgUser.id:null;
+  const now=new Date();
+  const seasonActive=!isMaint&&!seasonEnded&&now>=S_START;
+ 
+  // Maintenance box
+  const mb2=document.getElementById("maintbox");
+  if(isMaint||seasonEnded){
+    mb2.innerHTML=`<div class="maint-box">
+      <div style="font-size:28px;margin-bottom:7px;">🔧</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;">${isMaint?'Texnik ishlar olib borilmoqda':'Mavsum tugadi'}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px;">${isMaint?'Iltimos soat 13:00 yoki 15:30 gacha kuting':'Yangi mavsum tez orada boshlanadi'}</div>
+    </div>`;
+  }else mb2.innerHTML="";
+ 
+  // Match block
+  const mb=document.getElementById("mblock");
+  if(myMatch){
+    const mn=uid===myMatch.player1_id?myMatch.p1n:myMatch.p2n;
+    const on2=uid===myMatch.player1_id?myMatch.p2n:myMatch.p1n;
+    const mph=uid===myMatch.player1_id?myMatch.p1ph:myMatch.p2ph;
+    const oph=uid===myMatch.player1_id?myMatch.p2ph:myMatch.p1ph;
+    const isAw=myMatch.status==="awaiting",isub=myMatch.submitted_by===uid;
+    let act="";
+    if(isAw&&isub)act=`<div style="text-align:center;font-size:11px;color:var(--muted);margin-top:6px;">⏳ Raqib 5 daqiqada tasdiqlashi kerak...</div>`;
+    else if(isAw&&!isub)act=`<div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:7px;">📩 Hisob: <b style="color:var(--text)">${myMatch.score}</b></div>
+      <div class="brow"><button class="btn" style="flex:1;background:rgba(34,197,94,.13);color:var(--green);border:1px solid rgba(34,197,94,.3)" onclick="confirmScore(${myMatch.id},'yes')">✅ To'g'ri</button>
+      <button class="btn br" style="flex:1" onclick="confirmScore(${myMatch.id},'no')">❌ Xato</button></div>`;
+    else act=`<button class="btn ba" style="margin-top:8px" onclick="openSM()">⚽ Hisob kiritish</button>`;
+    mb.innerHTML=`<div class="mcard"><div style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;">⚔️ Joriy o'yin</div>
+      <div class="vsrow">
+        <div class="pch">${avEl(mph,mn,44)}<div style="font-size:12px;font-weight:600;margin-top:2px">@${mn}</div></div>
+        <div class="pvs">VS</div>
+        <div class="pch">${avEl(oph,on2,44)}<div style="font-size:12px;font-weight:600;margin-top:2px">@${on2}</div></div>
+      </div>${act}</div>`;
+  }else mb.innerHTML="";
+ 
+  // Queue block
+  const qb=document.getElementById("qblock");
+  if(inQueue&&!myMatch){
+    qb.innerHTML=`<div class="qcard"><div class="qsp">⚡</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px;">Raqib qidirilmoqda...</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Navbatda kutayapsiz</div>
+      <button class="btn br" onclick="leaveQ()">❌ Bekor qilish</button></div>`;
+  }else qb.innerHTML="";
+ 
+  // Actions
+  const ab=document.getElementById("hact");
+  if(!myMatch&&!inQueue){
+    if(!seasonActive){
+      ab.innerHTML="";
+    }else if(!isReg){
+      ab.innerHTML=`<button class="btn bg" style="margin-bottom:9px;font-size:15px;" onclick="doRegister()">📋 Ro'yxatdan o'tish</button>`;
+    }else{
+      ab.innerHTML=`<button class="btn bg" style="margin-bottom:9px;font-size:15px;" onclick="findMatch()">⚡ Online raqib topish</button>`;
+    }
+  }else ab.innerHTML="";
+}
+ 
+async function doRegister(){
+  if(!tgUser)return showToast("❌ Foydalanuvchi aniqlanmadi");
+  const uid=tgUser.id;
+  const banned=await db("users","GET",null,`?id=eq.${uid}&select=ban_until`);
+  if(banned&&banned[0]&&banned[0].ban_until&&new Date()<new Date(banned[0].ban_until))
+    return showToast("🚫 Bansiz, ro'yxatdan o'ta olmaysiz!");
+  await db("registrations","POST",{user_id:uid,season_num:snum,created_at:new Date().toISOString()});
+  isReg=true;renderHome();showToast("🎉 Ro'yxatdan o'tdingiz!");
+}
+ 
+async function findMatch(){
+  if(!tgUser)return;
+  if(isMaint)return showToast("🔧 Texnik ishlar davom etmoqda");
+  if(!isReg)return showToast("❗ Avval ro'yxatdan o'ting!");
+  const uid=tgUser.id;
+  const banned=await db("users","GET",null,`?id=eq.${uid}&select=ban_until`);
+  if(banned&&banned[0]&&banned[0].ban_until&&new Date()<new Date(banned[0].ban_until))
+    return showToast("🚫 Siz bansiz, o'ynay olmaysiz!");
+  if(myMatch)return showToast("⚠️ Allaqachon faol o'yiningiz bor!");
+  const queue=await db("queue","GET",null,"?order=created_at.asc");
+  const waiting=(queue||[]).filter(x=>x.user_id!==uid);
+  if(waiting.length>0){
+    const rivalId=waiting[0].user_id;
+    await db("queue","DELETE",null,`?user_id=eq.${rivalId}`);
+    await db("matches","POST",{player1_id:uid,player2_id:rivalId,season_num:snum,
+      season_date:today(),deadline:new Date(Date.now()+24*3600000).toISOString()});
+    showToast("⚔️ Raqib topildi! O'yin boshlandi!");
+    await loadHome();
+  }else{
+    await db("queue","POST",{user_id:uid,created_at:new Date().toISOString()});
+    inQueue=true;renderHome();showToast("⏳ Navbatga qo'shildingiz!");
+  }
+}
+ 
+async function leaveQ(){
+  if(!tgUser)return;
+  await db("queue","DELETE",null,`?user_id=eq.${tgUser.id}`);
+  inQueue=false;renderHome();showToast("✅ Navbatdan chiqdingiz");
+}
+ 
+function openSM(){
+  if(!myMatch)return;
+  const uid=tgUser.id;const opp=uid===myMatch.player1_id?myMatch.p2n:myMatch.p1n;
+  document.getElementById("sminfo").textContent=`Raqib: @${opp}`;
+  document.getElementById("sme").value="";document.getElementById("sopp").value="";
+  document.getElementById("sm").classList.add("show");
+}
+function closeSM(){document.getElementById("sm").classList.remove("show");}
+ 
+async function submitScore(){
+  const me=parseInt(document.getElementById("sme").value);
+  const opp=parseInt(document.getElementById("sopp").value);
+  if(isNaN(me)||isNaN(opp))return showToast("❗ Hisobni kiriting");
+  const uid=tgUser.id;
+  const rivalId=uid===myMatch.player1_id?myMatch.player2_id:myMatch.player1_id;
+  const winnerId=me>opp?uid:opp>me?rivalId:null;
+  await db("matches","PATCH",{score:`${me}-${opp}`,submitted_by:uid,
+    winner_id:winnerId,status:"awaiting",submitted_at:new Date().toISOString()},`?id=eq.${myMatch.id}`);
+  closeSM();showToast("✅ Hisob yuborildi! Raqib 5 daqiqada tasdiqlashi kerak!");
+  await loadHome();
+}
+ 
+async function confirmScore(mid,action){
+  if(action==="yes"){
+    const m=await db("matches","GET",null,`?id=eq.${mid}`);
+    if(!m||!m[0])return;const mt=m[0];
+    await db("matches","PATCH",{status:"done",confirmed:1},`?id=eq.${mid}`);
+    if(mt.winner_id===null){
+      for(const pid of[mt.player1_id,mt.player2_id]){
+        const u=await db("users","GET",null,`?id=eq.${pid}&select=points,draws`);
+        if(u&&u[0])await db("users","PATCH",{points:u[0].points+5,draws:u[0].draws+1},`?id=eq.${pid}`);
+      }
+      showToast("🤝 Durang! +5 ball");
+    }else{
+      const lid=mt.winner_id===mt.player1_id?mt.player2_id:mt.player1_id;
+      const wu=await db("users","GET",null,`?id=eq.${mt.winner_id}&select=points,wins`);
+      const lu=await db("users","GET",null,`?id=eq.${lid}&select=points,losses`);
+      if(wu&&wu[0])await db("users","PATCH",{points:wu[0].points+15,wins:wu[0].wins+1},`?id=eq.${mt.winner_id}`);
+      if(lu&&lu[0])await db("users","PATCH",{points:Math.max(0,lu[0].points-10),losses:lu[0].losses+1},`?id=eq.${lid}`);
+      showToast(mt.winner_id===tgUser.id?"🏆 G'alaba! +15 ball":"❌ Mag'lubiyat -10 ball");
+    }
+    myMatch=null;await loadHome();
+  }else{
+    await db("matches","PATCH",{status:"pending",score:null,submitted_by:null,winner_id:null},`?id=eq.${mid}`);
+    showToast("❌ Hisob rad etildi");await loadHome();
+  }
+}
+ 
+async function loadRating(){
+  document.getElementById("rlist").innerHTML=`<div class="empty"><div class="ei">⏳</div><div>Yuklanmoqda...</div></div>`;
+  const data=await db("users","GET",null,"?order=points.desc&select=id,username,points,wins,draws,losses,photo_url");
+  if(!data||data.length===0){
+    document.getElementById("rlist").innerHTML=`<div class="empty"><div class="ei">🏅</div><div>Hali hech kim yo'q</div></div>`;return;
+  }
+  const medals=["🥇","🥈","🥉"];
+  document.getElementById("rlist").innerHTML=data.map((u,i)=>{
+    const isMe=tgUser&&u.id===tgUser.id;
+    const rn=i<3?medals[i]:`${i+1}`;const rc=i<3?`r${i+1}`:"";
+    const tc=isMe?"me":i===0?"t1":i===1?"t2":i===2?"t3":"";
+    return`<div class="rrow ${tc}" onclick='openPlayer(${JSON.stringify(u)})'>
+      <div class="rnum ${rc}">${rn}</div>
+      ${avEl(u.photo_url,u.username,34)}
+      <div class="rinfo"><div class="rname">@${u.username||"?"}${isMe?' <span style="font-size:10px;color:var(--acc)">• siz</span>':''}</div></div>
+      <div class="rpts">${u.points||0}</div>
+    </div>`;
+  }).join("");
+}
+ 
+function openPlayer(u){
+  document.getElementById("pmcard").innerHTML=`
+    <div style="text-align:center;margin-bottom:14px;">
+      <div style="display:flex;justify-content:center;margin-bottom:9px;">${avEl(u.photo_url,u.username,62)}</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;">@${u.username||"?"}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:1px;">${u.points||0} ball</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;">
+      <div class="sc2"><div class="sn2" style="color:var(--green)">${u.wins||0}</div><div class="sl2">G'alaba</div></div>
+      <div class="sc2"><div class="sn2" style="color:#fbbf24">${u.draws||0}</div><div class="sl2">Durang</div></div>
+      <div class="sc2"><div class="sn2" style="color:var(--red)">${u.losses||0}</div><div class="sl2">Mag'lub</div></div>
+    </div>
+    <button class="btn bm" onclick="closePM()">✕ Yopish</button>`;
+  document.getElementById("pm").classList.add("show");
+}
+function closePM(e){if(!e||e.target===document.getElementById("pm"))document.getElementById("pm").classList.remove("show");}
+ 
+async function loadProfile(){
+  if(!tgUser){document.getElementById("pcon").innerHTML=`<div class="empty"><div class="ei">👤</div><div>Telegram orqali kirish kerak</div></div>`;return;}
+  const d=await db("users","GET",null,`?id=eq.${tgUser.id}`);
+  if(!d||d.length===0){document.getElementById("pcon").innerHTML=`<div class="empty"><div class="ei">👤</div><div>/start yuboring</div></div>`;return;}
+  const u=d[0];
+  const all=await db("users","GET",null,"?order=points.desc&select=id");
+  const rank=all?all.findIndex(x=>x.id===u.id)+1:"?";const total=all?all.length:"?";
+  document.getElementById("pcon").innerHTML=`
+    <div class="phead">
+      <div style="display:flex;justify-content:center;margin-bottom:10px;">${avEl(u.photo_url,u.first_name||u.username,70)}</div>
+      <div class="pname">${u.first_name||u.username||"?"}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:1px;">@${u.username||"?"}</div>
+      <div class="prank">${rank}/${total} o'rin · ${u.points||0} ball</div>
+    </div>
+    <div class="sgrid">
+      <div class="sc2"><div class="sn2" style="color:var(--gold)">${u.points||0}</div><div class="sl2">Ball</div></div>
+      <div class="sc2"><div class="sn2" style="color:var(--green)">${u.wins||0}</div><div class="sl2">G'alaba</div></div>
+      <div class="sc2"><div class="sn2" style="color:#fbbf24">${u.draws||0}</div><div class="sl2">Durang</div></div>
+      <div class="sc2"><div class="sn2" style="color:var(--red)">${u.losses||0}</div><div class="sl2">Mag'lub</div></div>
+    </div>
+    <div class="card">
+      <div class="ir"><span class="il">🏆 O'rin</span><span class="iv">${rank} / ${total}</span></div>
+      <div class="ir"><span class="il">🆔 Telegram ID</span><span class="iv">${u.id}</span></div>
+      <div class="ir"><span class="il">📅 A'zo bo'lgan</span><span class="iv">${new Date(u.created_at).toLocaleDateString('uz')}</span></div>
+    </div>`;
+}
+ 
+async function loadAdmin(){
+  if(!tgUser||tgUser.id!==ADMIN_ID)return;
+  const[us,ms,ds,qs,mn,sr]=await Promise.all([
+    db("users","GET",null,"?select=id"),db("matches","GET",null,"?select=id"),
+    db("matches","GET",null,"?status=eq.done&select=id"),db("queue","GET",null,"?select=user_id"),
+    db("maintenance","GET",null,"?id=eq.1"),db("seasons","GET",null,"?order=id.desc&limit=1")
+  ]);
+  document.getElementById("aT").textContent=us?.length||0;
+  document.getElementById("aM").textContent=ms?.length||0;
+  document.getElementById("aD").textContent=ds?.length||0;
+  document.getElementById("aQ").textContent=qs?.length||0;
+  const mintOn=mn&&mn[0]?mn[0].active:false;
+  const season=sr&&sr[0]?sr[0]:{id:1,status:"active"};
+  document.getElementById("adminActs").innerHTML=`
+    <button class="btn bg" onclick="adminEndSeason(${season.id})">🏁 ${season.id}-Mavsumni yakunlash</button>
+    <button class="btn ba" onclick="adminNewSeason(${season.id+1})">🚀 ${season.id+1}-Mavsum boshlash</button>
+    <button class="btn ${mintOn?'br':'bm'}" onclick="adminToggleMaint(${!mintOn})">${mintOn?'✅ Texnik ish: ON':'🔧 Texnik ish: OFF'}</button>
+    <button class="btn bm" onclick="adminClearQ()">🗑️ Navbatni tozalash</button>`;
+}
+ 
+async function adminEndSeason(sid){
+  if(!confirm(`${sid}-mavsumni yakunlashni tasdiqlaysizmi?`))return;
+  await db("seasons","PATCH",{status:"ended",ended_at:new Date().toISOString()},`?id=eq.${sid}`);
+  seasonEnded=true;renderHome();updateSeason();showToast(`🏁 ${sid}-mavsum yakunlandi!`);loadAdmin();
+}
+async function adminNewSeason(newSnum){
+  if(!confirm(`${newSnum}-mavsumni boshlashni tasdiqlaysizmi?\nBarcha ratinglar 0 ga tushadi!`))return;
+  await db("seasons","POST",{id:newSnum,status:"active",started_at:new Date().toISOString()});
+  // Reset users
+  const users=await db("users","GET",null,"?select=id");
+  for(const u of users) await db("users","PATCH",{points:0,wins:0,draws:0,losses:0},`?id=eq.${u.id}`);
+  await db("queue","DELETE",null,"?id=gt.0");
+  snum=newSnum;seasonEnded=false;isReg=false;renderHome();updateSeason();
+  showToast(`🚀 ${newSnum}-mavsum boshlandi!`);loadAdmin();
+}
+async function adminToggleMaint(val){
+  await db("maintenance","PATCH",{active:val,started_at:val?new Date().toISOString():null},"?id=eq.1");
+  isMaint=val;renderHome();updateSeason();showToast(val?"🔧 Texnik ish ON":"✅ Texnik ish OFF");loadAdmin();
+}
+async function adminClearQ(){
+  if(!confirm("Navbatni tozalash?"))return;
+  await db("queue","DELETE",null,"?id=gt.0");showToast("✅ Navbat tozalandi");loadAdmin();
+}
+ 
+async function init(){
+  const fill=document.getElementById("lf");let p=0;
+  const iv=setInterval(()=>{p+=15;fill.style.width=Math.min(p,90)+"%";},200);
+ 
+  if(window.Telegram&&window.Telegram.WebApp){
+    const tg=window.Telegram.WebApp;tg.expand();tg.setHeaderColor("#0a0a0f");tg.setBackgroundColor("#0a0a0f");
+    if(tg.initDataUnsafe&&tg.initDataUnsafe.user){
+      tgUser=tg.initDataUnsafe.user;
+      await db("users","POST",{id:tgUser.id,username:tgUser.username||tgUser.first_name,first_name:tgUser.first_name||""});
+    }
+  }else{
+    tgUser={id:1590570666,username:"admin",first_name:"Admin"};
+  }
+ 
+  if(tgUser){
+    const u=await db("users","GET",null,`?id=eq.${tgUser.id}&select=photo_url`);
+    const ph=u&&u[0]?u[0].photo_url:null;
+    document.getElementById("tav").innerHTML=avEl(ph,tgUser.first_name,30);
+    if(tgUser.id===ADMIN_ID)document.getElementById("nb3").style.display="flex";
+    await loadHome();
+  }
+ 
+  updateSeason();setInterval(updateSeason,1000);
+  setInterval(loadHome,20000);
+ 
+  clearInterval(iv);fill.style.width="100%";
+  await new Promise(r=>setTimeout(r,300));
+  document.getElementById("loader").style.display="none";
+  document.getElementById("topbar").style.display="flex";
+  document.getElementById("bnav").style.display="flex";
+  sp(0);
+}
+ 
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
