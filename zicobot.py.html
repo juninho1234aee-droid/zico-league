@@ -55,6 +55,7 @@ html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inte
 .ba{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;}
 .br{background:rgba(239,68,68,.13);color:var(--red);border:1px solid rgba(239,68,68,.3);}
 .bm{background:rgba(100,116,139,.12);color:var(--muted);border:1px solid var(--border);}
+.bo{background:rgba(59,130,246,.1);color:#60a5fa;border:1px solid rgba(59,130,246,.3);}
 .brow{display:flex;gap:8px;}.brow .btn{flex:1;}
 .mcard{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(168,85,247,.05));
   border:1px solid rgba(124,58,237,.35);border-radius:13px;padding:13px;margin-bottom:10px;}
@@ -77,7 +78,7 @@ html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inte
 .rnum{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;width:22px;text-align:center;color:var(--muted);flex-shrink:0;}
 .rnum.r1{color:var(--gold)}.rnum.r2{color:#C0C0C0}.rnum.r3{color:#CD7F32}
 .rinfo{flex:1;min-width:0;}
-.rname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px;}
 .rpts{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);flex-shrink:0;}
 .phead{background:linear-gradient(135deg,#1a0a2e,#16161f);border:1px solid var(--border);
   border-radius:16px;padding:20px 13px;text-align:center;margin-bottom:10px;}
@@ -118,6 +119,17 @@ html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inte
   display:flex;align-items:center;justify-content:center;font-weight:700;}
 .maint-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);
   border-radius:13px;padding:16px;text-align:center;margin-bottom:10px;}
+/* NISHONLAR (BADGES) */
+.badges-row{display:flex;justify-content:center;gap:10px;margin:10px 0 4px;flex-wrap:wrap;}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;font-size:11px;font-weight:700;font-family:'Rajdhani',sans-serif;}
+.badge-top1{background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(255,165,0,.1));border:1px solid rgba(255,215,0,.55);color:var(--gold);
+  box-shadow:0 0 14px rgba(255,215,0,.25);}
+.badge-streak{background:linear-gradient(135deg,rgba(239,68,68,.18),rgba(251,146,60,.1));border:1px solid rgba(251,146,60,.5);color:#fb923c;
+  box-shadow:0 0 14px rgba(251,146,60,.2);}
+.badge-mini{font-size:12px;}
+.rule-sec{margin-bottom:14px;}
+.rule-h{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.rule-p{font-size:12.5px;color:var(--text);line-height:1.55;opacity:.92;}
 </style>
 </head>
 <body>
@@ -159,13 +171,62 @@ html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inte
   <div class="rlist" id="rlist"><div class="empty"><div class="ei">⏳</div><div>Yuklanmoqda...</div></div></div>
 </div>
  
-<!-- PROFILE -->
+<!-- RULES / QONUN-QOIDALAR -->
 <div class="page" id="p2">
+  <div class="ct" style="margin-bottom:12px;">📜 Qonun-qoidalar</div>
+ 
+  <div class="card rule-sec">
+    <div class="rule-h">📊 Ball tizimi</div>
+    <div class="rule-p">🏆 G'alaba: <b style="color:var(--green)">+15 ball</b><br>
+    🤝 Durang: <b style="color:#fbbf24">+5 ball</b><br>
+    ❌ Mag'lubiyat: <b style="color:var(--red)">-10 ball</b></div>
+  </div>
+ 
+  <div class="card rule-sec">
+    <div class="rule-h">⚽ Hisob qanday tasdiqlanadi</div>
+    <div class="rule-p">O'yin tugagach g'olib (yoki har qanday tomon) hisobni kiritadi. Raqibga xabar boradi va u
+    <b>5 daqiqa</b> ichida "✅ To'g'ri" yoki "❌ Xato" tugmasini bosishi kerak.</div>
+  </div>
+ 
+  <div class="card rule-sec">
+    <div class="rule-h">🚫 Tasdiqlamaslik jazosi</div>
+    <div class="rule-p">Agar raqib 5 daqiqa ichida hisobni tasdiqlamasa:<br>
+    • Unga <b>3 kunlik ban</b> beriladi (bu vaqtda o'ynay olmaydi)<br>
+    • Kiritilgan hisob <b>avtomatik kuchga kiradi</b> va ball shu asosda hisoblanadi</div>
+  </div>
+ 
+  <div class="card rule-sec">
+    <div class="rule-h">⚡ Online raqib topish</div>
+    <div class="rule-p">Tizim faqat so'nggi daqiqalarda faol bo'lgan (online) o'yinchilar bilan moslashtiradi.
+    Agar raqib javob bermasa yoki mos kelmasa, "🔄 Boshqa raqib qidirish" tugmasidan foydalanib qayta qidirishingiz mumkin.</div>
+  </div>
+ 
+  <div class="card rule-sec">
+    <div class="rule-h">🎖️ Nishonlar (belgilar)</div>
+    <div class="rule-p">
+      <span class="badge badge-top1" style="margin-bottom:6px;">🏆 TOP-1</span><br>
+      Mavsum yakunida reytingda <b>1-o'rinni</b> egallagan o'yinchiga beriladi. Bu nishon doimiy saqlanadi va
+      profilingizda hamma ko'radi.<br><br>
+      <span class="badge badge-streak" style="margin-bottom:6px;">🔥 15 KETMA-KET</span><br>
+      Orada birorta ham mag'lubiyat bo'lmagan holda <b>ketma-ket 15 ta g'alaba</b> qozongan o'yinchiga beriladi.
+      Bu nishon ham doimiy saqlanadi va profilingizda hamma ko'radi.
+    </div>
+  </div>
+ 
+  <div class="card rule-sec">
+    <div class="rule-h">⚖️ Halollik</div>
+    <div class="rule-p">Barcha hisoblar ikki tomon roziligi bilan tasdiqlanadi. Shubhali natijalar (katta farq bilan)
+    tizim tomonidan avtomatik aniqlanadi va admin tomonidan tekshiriladi. Firibgarlik aniqlansa — ban.</div>
+  </div>
+</div>
+ 
+<!-- PROFILE -->
+<div class="page" id="p3">
   <div id="pcon"><div class="empty"><div class="ei">⏳</div><div>Yuklanmoqda...</div></div></div>
 </div>
  
 <!-- ADMIN -->
-<div class="page" id="p3">
+<div class="page" id="p4">
   <div class="ct">👑 Admin panel</div>
   <div class="agrid">
     <div class="astat"><div class="asn" id="aT">—</div><div class="asl">A'zolar</div></div>
@@ -180,8 +241,9 @@ html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inte
 <div class="bnav" id="bnav" style="display:none">
   <button class="nb on" id="nb0" onclick="sp(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Bosh</button>
   <button class="nb" id="nb1" onclick="sp(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Reyting</button>
-  <button class="nb" id="nb2" onclick="sp(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profil</button>
-  <button class="nb" id="nb3" onclick="sp(3)" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Admin</button>
+  <button class="nb" id="nb2" onclick="sp(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Qoidalar</button>
+  <button class="nb" id="nb3" onclick="sp(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profil</button>
+  <button class="nb" id="nb4" onclick="sp(4)" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Admin</button>
 </div>
  
 <!-- SCORE MODAL -->
@@ -190,7 +252,7 @@ html,body{height:100%;background:var(--dark);color:var(--text);font-family:'Inte
   <div style="font-size:12px;color:var(--muted);" id="sminfo"></div>
   <div class="sinps"><input class="sinp" id="sme" type="number" min="0" max="99" placeholder="0"><span class="ssep">—</span><input class="sinp" id="sopp" type="number" min="0" max="99" placeholder="0"></div>
   <div style="font-size:11px;color:var(--muted);margin-bottom:12px;">Chap: Siz | O'ng: Raqib</div>
-  <div class="brow"><button class="btn ba" style="flex:2" onclick="submitScore()">✅ Yuborish</button><button class="btn bm" style="flex:1" onclick="closeSM()">Bekor</button></div>
+  <div class="brow"><button class="btn ba" style="flex:2" id="submitScoreBtn" onclick="submitScore()">✅ Yuborish</button><button class="btn bm" style="flex:1" onclick="closeSM()">Bekor</button></div>
 </div></div>
  
 <!-- PLAYER MODAL -->
@@ -203,6 +265,9 @@ const SB_URL="https://wfpspsiikwdxmatavwwm.supabase.co";
 const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcHNwc2lpa3dkeG1hdGF2d3dtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI4MjYwMTcsImV4cCI6MjA5ODQwMjAxN30.a48U3deN-0Kjg3FC4Edy-m3Z71ru-LyHuohkFwkEyfw";
 const ADMIN_ID=1590570666;
 const S_START=new Date("2026-07-03T07:00:00+05:00");
+const ONLINE_WINDOW_MS=3*60*1000;      // 3 daqiqa ichida faol bo'lsa "online" hisoblanadi
+const QUEUE_STALE_MS=10*60*1000;       // 10 daqiqadan eski navbat yozuvlari o'chiriladi
+const WIN_PTS=15, LOSS_PTS=10, DRAW_PTS=5, STREAK_BADGE_AT=15;
  
 let tgUser=null,myMatch=null,inQueue=false,isReg=false,snum=1,isMaint=false,seasonEnded=false;
  
@@ -216,7 +281,7 @@ async function db(t,m="GET",b=null,p=""){
  
 function today(){const n=new Date();return`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;}
 function fmtTime(s){const d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),mn=Math.floor((s%3600)/60),sc=s%60;
-  if(d>0)return`${d}k ${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}`;
+  if(d>0)return`${d} kun ${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
   return`${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;}
  
 function showToast(msg,dur=2500){const e=document.getElementById("toast");e.textContent=msg;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),dur);}
@@ -225,6 +290,13 @@ function avEl(url,name,sz=42){
   if(url)return`<img src="${url}" class="av" style="width:${sz}px;height:${sz}px;" onerror="this.style.display='none'">`;
   const i=(name||"?").charAt(0).toUpperCase();
   return`<div class="avph" style="width:${sz}px;height:${sz}px;font-size:${Math.floor(sz*.36)}px;">${i}</div>`;}
+ 
+function badgesRow(u,mini=false){
+  let out="";
+  if(u.badge_top1)out+=`<span class="badge badge-top1 ${mini?'badge-mini':''}">🏆${mini?'':' TOP-1'}</span>`;
+  if(u.badge_streak15)out+=`<span class="badge badge-streak ${mini?'badge-mini':''}">🔥${mini?'':' 15 KETMA-KET'}</span>`;
+  return out;
+}
  
 function updateSeason(){
   const now=new Date();
@@ -254,9 +326,15 @@ function updateSeason(){
 }
  
 function sp(idx){
-  for(let i=0;i<4;i++){const e=document.getElementById(`p${i}`);if(e)e.style.display=i===idx?"block":"none";}
+  for(let i=0;i<5;i++){const e=document.getElementById(`p${i}`);if(e)e.style.display=i===idx?"block":"none";}
   document.querySelectorAll(".nb").forEach((b,i)=>b.classList.toggle("on",i===idx));
-  if(idx===1)loadRating();if(idx===2)loadProfile();if(idx===3)loadAdmin();
+  if(idx===1)loadRating();if(idx===3)loadProfile();if(idx===4)loadAdmin();
+}
+ 
+// Foydalanuvchi hozir "online" ekanini bildirish uchun har chaqirishda vaqt yangilanadi
+async function heartbeat(){
+  if(!tgUser)return;
+  try{ await db("users","PATCH",{last_active:new Date().toISOString()},`?id=eq.${tgUser.id}`); }catch{}
 }
  
 async function loadHome(){
@@ -314,15 +392,20 @@ function renderHome(){
     let act="";
     if(isAw&&isub)act=`<div style="text-align:center;font-size:11px;color:var(--muted);margin-top:6px;">⏳ Raqib 5 daqiqada tasdiqlashi kerak...</div>`;
     else if(isAw&&!isub)act=`<div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:7px;">📩 Hisob: <b style="color:var(--text)">${myMatch.score}</b></div>
-      <div class="brow"><button class="btn" style="flex:1;background:rgba(34,197,94,.13);color:var(--green);border:1px solid rgba(34,197,94,.3)" onclick="confirmScore(${myMatch.id},'yes')">✅ To'g'ri</button>
-      <button class="btn br" style="flex:1" onclick="confirmScore(${myMatch.id},'no')">❌ Xato</button></div>`;
-    else act=`<button class="btn ba" style="margin-top:8px" onclick="openSM()">⚽ Hisob kiritish</button>`;
+      <div class="brow"><button class="btn" style="flex:1;background:rgba(34,197,94,.13);color:var(--green);border:1px solid rgba(34,197,94,.3)" id="confYesBtn" onclick="confirmScore(${myMatch.id},'yes')">✅ To'g'ri</button>
+      <button class="btn br" style="flex:1" id="confNoBtn" onclick="confirmScore(${myMatch.id},'no')">❌ Xato</button></div>`;
+    else act=`<button class="btn ba" style="margin-top:8px" onclick="openSM()">⚽ Hisob kiritish</button>
+      <button class="btn bo" style="margin-top:8px" onclick="cancelAndRequeue(${myMatch.id})">🔄 Boshqa raqib qidirish</button>`;
     mb.innerHTML=`<div class="mcard"><div style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;">⚔️ Joriy o'yin</div>
       <div class="vsrow">
         <div class="pch">${avEl(mph,mn,44)}<div style="font-size:12px;font-weight:600;margin-top:2px">@${mn}</div></div>
         <div class="pvs">VS</div>
-        <div class="pch">${avEl(oph,on2,44)}<div style="font-size:12px;font-weight:600;margin-top:2px">@${on2}</div></div>
-      </div>${act}</div>`;
+        <div class="pch">${avEl(oph,on2,44)}<a href="https://t.me/${on2}" target="_blank" style="font-size:12px;font-weight:600;margin-top:2px;color:var(--acc2);text-decoration:none;">@${on2} 💬</a></div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <a href="https://t.me/${on2}" target="_blank" class="btn" style="display:block;text-align:center;background:rgba(124,58,237,.15);color:var(--acc2);border:1px solid rgba(124,58,237,.3);text-decoration:none;padding:9px;border-radius:10px;font-size:13px;font-weight:600;">💬 @${on2} ga yozish</a>
+      </div>
+      ${act}</div>`;
   }else mb.innerHTML="";
  
   // Queue block
@@ -330,8 +413,9 @@ function renderHome(){
   if(inQueue&&!myMatch){
     qb.innerHTML=`<div class="qcard"><div class="qsp">⚡</div>
       <div style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px;">Raqib qidirilmoqda...</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Navbatda kutayapsiz</div>
-      <button class="btn br" onclick="leaveQ()">❌ Bekor qilish</button></div>`;
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Faqat online o'yinchilar bilan moslashtiramiz</div>
+      <div class="brow"><button class="btn bo" onclick="findMatch()">🔄 Boshqa raqib qidirish</button>
+      <button class="btn br" onclick="leaveQ()">❌ Bekor qilish</button></div></div>`;
   }else qb.innerHTML="";
  
   // Actions
@@ -353,8 +437,25 @@ async function doRegister(){
   const banned=await db("users","GET",null,`?id=eq.${uid}&select=ban_until`);
   if(banned&&banned[0]&&banned[0].ban_until&&new Date()<new Date(banned[0].ban_until))
     return showToast("🚫 Bansiz, ro'yxatdan o'ta olmaysiz!");
-  await db("registrations","POST",{user_id:uid,season_num:snum,created_at:new Date().toISOString()});
-  isReg=true;renderHome();showToast("🎉 Ro'yxatdan o'tdingiz!");
+  // Allaqachon ro'yxatdanmi tekshir
+  const ex=await db("registrations","GET",null,`?user_id=eq.${uid}&season_num=eq.${snum}`);
+  if(ex&&ex.length>0){isReg=true;renderHome();return showToast("✅ Allaqachon ro'yxatdansiz!");}
+  const res=await db("registrations","POST",{user_id:uid,season_num:snum,created_at:new Date().toISOString()});
+  if(res!==null){
+    isReg=true;
+    // Tugmani darhol yashirish
+    document.getElementById("hact").innerHTML="";
+    renderHome();
+    showToast("🎉 Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+  }else{
+    showToast("❌ Xato yuz berdi, qayta urining");
+  }
+}
+ 
+// Navbatdagi 10 daqiqadan eski (endi "online" bo'lmagan) yozuvlarni tozalaydi
+async function purgeStaleQueue(){
+  const cutoff=new Date(Date.now()-QUEUE_STALE_MS).toISOString();
+  try{ await db("queue","DELETE",null,`?created_at=lt.${cutoff}`); }catch{}
 }
  
 async function findMatch(){
@@ -366,18 +467,39 @@ async function findMatch(){
   if(banned&&banned[0]&&banned[0].ban_until&&new Date()<new Date(banned[0].ban_until))
     return showToast("🚫 Siz bansiz, o'ynay olmaysiz!");
   if(myMatch)return showToast("⚠️ Allaqachon faol o'yiningiz bor!");
+ 
+  await heartbeat();
+  await purgeStaleQueue();
+ 
   const queue=await db("queue","GET",null,"?order=created_at.asc");
-  const waiting=(queue||[]).filter(x=>x.user_id!==uid);
-  if(waiting.length>0){
-    const rivalId=waiting[0].user_id;
-    await db("queue","DELETE",null,`?user_id=eq.${rivalId}`);
-    await db("matches","POST",{player1_id:uid,player2_id:rivalId,season_num:snum,
+  const waitingIds=(queue||[]).filter(x=>x.user_id!==uid).map(x=>x.user_id);
+ 
+  let onlineRivalId=null;
+  if(waitingIds.length>0){
+    // Faqat oxirgi 3 daqiqada faol bo'lganlarni "online" deb hisoblaymiz
+    const cutoff=new Date(Date.now()-ONLINE_WINDOW_MS).toISOString();
+    const idsList=waitingIds.join(",");
+    const activeUsers=await db("users","GET",null,`?id=in.(${idsList})&last_active=gte.${cutoff}&select=id&order=id.asc`);
+    if(activeUsers&&activeUsers.length>0){
+      // navbatdagi tartibda birinchi online odamni tanlaymiz
+      for(const qid of waitingIds){
+        if(activeUsers.some(u=>u.id===qid)){onlineRivalId=qid;break;}
+      }
+    }
+  }
+ 
+  if(onlineRivalId){
+    await db("queue","DELETE",null,`?user_id=eq.${onlineRivalId}`);
+    await db("queue","DELETE",null,`?user_id=eq.${uid}`);
+    await db("matches","POST",{player1_id:uid,player2_id:onlineRivalId,season_num:snum,
       season_date:today(),deadline:new Date(Date.now()+24*3600000).toISOString()});
-    showToast("⚔️ Raqib topildi! O'yin boshlandi!");
+    inQueue=false;
+    showToast("⚔️ Online raqib topildi! O'yin boshlandi!");
     await loadHome();
   }else{
-    await db("queue","POST",{user_id:uid,created_at:new Date().toISOString()});
-    inQueue=true;renderHome();showToast("⏳ Navbatga qo'shildingiz!");
+    const ex=await db("queue","GET",null,`?user_id=eq.${uid}`);
+    if(!ex||ex.length===0) await db("queue","POST",{user_id:uid,created_at:new Date().toISOString()});
+    inQueue=true;renderHome();showToast("⏳ Hozircha online raqib yo'q, navbatga qo'shildingiz");
   }
 }
  
@@ -385,6 +507,16 @@ async function leaveQ(){
   if(!tgUser)return;
   await db("queue","DELETE",null,`?user_id=eq.${tgUser.id}`);
   inQueue=false;renderHome();showToast("✅ Navbatdan chiqdingiz");
+}
+ 
+// Hali hisob kiritilmagan (pending) matchni bekor qilib, qayta online raqib qidiradi
+async function cancelAndRequeue(mid){
+  if(!myMatch||myMatch.id!==mid)return;
+  if(myMatch.status!=="pending")return showToast("❗ Hisob kiritilgan o'yinni bekor qilib bo'lmaydi");
+  await db("matches","DELETE",null,`?id=eq.${mid}&status=eq.pending`);
+  myMatch=null;
+  showToast("🔄 Boshqa raqib qidirilmoqda...");
+  await findMatch();
 }
  
 function openSM(){
@@ -397,47 +529,92 @@ function openSM(){
 function closeSM(){document.getElementById("sm").classList.remove("show");}
  
 async function submitScore(){
+  const btn=document.getElementById("submitScoreBtn");
   const me=parseInt(document.getElementById("sme").value);
   const opp=parseInt(document.getElementById("sopp").value);
   if(isNaN(me)||isNaN(opp))return showToast("❗ Hisobni kiriting");
-  const uid=tgUser.id;
-  const rivalId=uid===myMatch.player1_id?myMatch.player2_id:myMatch.player1_id;
-  const winnerId=me>opp?uid:opp>me?rivalId:null;
-  await db("matches","PATCH",{score:`${me}-${opp}`,submitted_by:uid,
-    winner_id:winnerId,status:"awaiting",submitted_at:new Date().toISOString()},`?id=eq.${myMatch.id}`);
-  closeSM();showToast("✅ Hisob yuborildi! Raqib 5 daqiqada tasdiqlashi kerak!");
-  await loadHome();
+  if(btn.disabled)return; // ikki marta bosishni oldini olish
+  btn.disabled=true;
+  try{
+    const uid=tgUser.id;
+    const rivalId=uid===myMatch.player1_id?myMatch.player2_id:myMatch.player1_id;
+    const winnerId=me>opp?uid:opp>me?rivalId:null;
+    // Faqat hali "pending" bo'lsa yozamiz — qayta-qayta yuborishni oldini oladi
+    const claimed=await db("matches","PATCH",{score:`${me}-${opp}`,submitted_by:uid,
+      winner_id:winnerId,status:"awaiting",submitted_at:new Date().toISOString()},
+      `?id=eq.${myMatch.id}&status=eq.pending`);
+    if(!claimed||claimed.length===0){
+      showToast("⏳ Bu o'yin uchun hisob allaqachon yuborilgan");
+    }else{
+      showToast("✅ Hisob yuborildi! Raqib 5 daqiqada tasdiqlashi kerak!");
+    }
+    closeSM();
+    await loadHome();
+  } finally { btn.disabled=false; }
+}
+ 
+async function updateStreakAndBadges(userId,won){
+  const u=await db("users","GET",null,`?id=eq.${userId}&select=current_streak,best_streak,badge_streak15`);
+  if(!u||!u[0])return;
+  if(won){
+    const ns=(u[0].current_streak||0)+1;
+    const best=Math.max(u[0].best_streak||0,ns);
+    const patch={current_streak:ns,best_streak:best};
+    if(ns>=STREAK_BADGE_AT && !u[0].badge_streak15) patch.badge_streak15=true;
+    await db("users","PATCH",patch,`?id=eq.${userId}`);
+  }else{
+    await db("users","PATCH",{current_streak:0},`?id=eq.${userId}`);
+  }
 }
  
 async function confirmScore(mid,action){
-  if(action==="yes"){
-    const m=await db("matches","GET",null,`?id=eq.${mid}`);
-    if(!m||!m[0])return;const mt=m[0];
-    await db("matches","PATCH",{status:"done",confirmed:1},`?id=eq.${mid}`);
-    if(mt.winner_id===null){
-      for(const pid of[mt.player1_id,mt.player2_id]){
-        const u=await db("users","GET",null,`?id=eq.${pid}&select=points,draws`);
-        if(u&&u[0])await db("users","PATCH",{points:u[0].points+5,draws:u[0].draws+1},`?id=eq.${pid}`);
+  const yesBtn=document.getElementById("confYesBtn"),noBtn=document.getElementById("confNoBtn");
+  if(yesBtn)yesBtn.disabled=true; if(noBtn)noBtn.disabled=true;
+  try{
+    if(action==="yes"){
+      // Atomik: faqat hali "awaiting" bo'lsa "done" ga o'tkazamiz.
+      // Agar boshqa joyda (bot yoki qayta bosish orqali) allaqachon hisoblangan bo'lsa,
+      // bo'sh natija qaytadi va biz ballarni QAYTA QO'SHMAYMIZ.
+      const claimed=await db("matches","PATCH",{status:"done",confirmed:1},`?id=eq.${mid}&status=eq.awaiting`);
+      if(!claimed||claimed.length===0){ showToast("✅ Bu o'yin allaqachon hisoblangan"); myMatch=null; await loadHome(); return; }
+      const mt=claimed[0];
+      if(mt.winner_id===null){
+        for(const pid of[mt.player1_id,mt.player2_id]){
+          const u=await db("users","GET",null,`?id=eq.${pid}&select=points,draws`);
+          if(u&&u[0])await db("users","PATCH",{points:u[0].points+DRAW_PTS,draws:u[0].draws+1},`?id=eq.${pid}`);
+        }
+        showToast("🤝 Durang! +5 ball");
+      }else{
+        const lid=mt.winner_id===mt.player1_id?mt.player2_id:mt.player1_id;
+        const wu=await db("users","GET",null,`?id=eq.${mt.winner_id}&select=points,wins`);
+        const lu=await db("users","GET",null,`?id=eq.${lid}&select=points,losses`);
+        if(wu&&wu[0])await db("users","PATCH",{points:wu[0].points+WIN_PTS,wins:wu[0].wins+1},`?id=eq.${mt.winner_id}`);
+        if(lu&&lu[0])await db("users","PATCH",{points:Math.max(0,lu[0].points-LOSS_PTS),losses:lu[0].losses+1},`?id=eq.${lid}`);
+        await updateStreakAndBadges(mt.winner_id,true);
+        await updateStreakAndBadges(lid,false);
+        showToast(mt.winner_id===tgUser.id?"🏆 G'alaba! +15 ball":"❌ Mag'lubiyat -10 ball");
       }
-      showToast("🤝 Durang! +5 ball");
+      myMatch=null;await loadHome();
     }else{
-      const lid=mt.winner_id===mt.player1_id?mt.player2_id:mt.player1_id;
-      const wu=await db("users","GET",null,`?id=eq.${mt.winner_id}&select=points,wins`);
-      const lu=await db("users","GET",null,`?id=eq.${lid}&select=points,losses`);
-      if(wu&&wu[0])await db("users","PATCH",{points:wu[0].points+15,wins:wu[0].wins+1},`?id=eq.${mt.winner_id}`);
-      if(lu&&lu[0])await db("users","PATCH",{points:Math.max(0,lu[0].points-10),losses:lu[0].losses+1},`?id=eq.${lid}`);
-      showToast(mt.winner_id===tgUser.id?"🏆 G'alaba! +15 ball":"❌ Mag'lubiyat -10 ball");
+      const un=await db("matches","PATCH",{status:"pending",score:null,submitted_by:null,winner_id:null},`?id=eq.${mid}&status=eq.awaiting`);
+      if(!un||un.length===0){ showToast("✅ Bu o'yin allaqachon hisoblangan"); }
+      else showToast("❌ Hisob rad etildi");
+      await loadHome();
     }
-    myMatch=null;await loadHome();
-  }else{
-    await db("matches","PATCH",{status:"pending",score:null,submitted_by:null,winner_id:null},`?id=eq.${mid}`);
-    showToast("❌ Hisob rad etildi");await loadHome();
+  } finally {
+    if(yesBtn)yesBtn.disabled=false; if(noBtn)noBtn.disabled=false;
   }
 }
  
 async function loadRating(){
   document.getElementById("rlist").innerHTML=`<div class="empty"><div class="ei">⏳</div><div>Yuklanmoqda...</div></div>`;
-  const data=await db("users","GET",null,"?order=points.desc&select=id,username,points,wins,draws,losses,photo_url");
+  // Faqat ro'yxatdan o'tganlarni ko'rsatish
+  const regs=await db("registrations","GET",null,`?season_num=eq.${snum}&select=user_id`);
+  if(!regs||regs.length===0){
+    document.getElementById("rlist").innerHTML=`<div class="empty"><div class="ei">🏅</div><div>Hali hech kim ro'yxatdan o'tmagan</div></div>`;return;
+  }
+  const ids=regs.map(r=>r.user_id).join(",");
+  const data=await db("users","GET",null,`?id=in.(${ids})&order=points.desc&select=id,username,points,wins,draws,losses,photo_url,badge_top1,badge_streak15,current_streak,best_streak`);
   if(!data||data.length===0){
     document.getElementById("rlist").innerHTML=`<div class="empty"><div class="ei">🏅</div><div>Hali hech kim yo'q</div></div>`;return;
   }
@@ -449,7 +626,7 @@ async function loadRating(){
     return`<div class="rrow ${tc}" onclick='openPlayer(${JSON.stringify(u)})'>
       <div class="rnum ${rc}">${rn}</div>
       ${avEl(u.photo_url,u.username,34)}
-      <div class="rinfo"><div class="rname">@${u.username||"?"}${isMe?' <span style="font-size:10px;color:var(--acc)">• siz</span>':''}</div></div>
+      <div class="rinfo"><div class="rname">@${u.username||"?"}${badgesRow(u,true)}${isMe?' <span style="font-size:10px;color:var(--acc)">• siz</span>':''}</div></div>
       <div class="rpts">${u.points||0}</div>
     </div>`;
   }).join("");
@@ -461,6 +638,7 @@ function openPlayer(u){
       <div style="display:flex;justify-content:center;margin-bottom:9px;">${avEl(u.photo_url,u.username,62)}</div>
       <div style="font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;">@${u.username||"?"}</div>
       <div style="font-size:12px;color:var(--muted);margin-top:1px;">${u.points||0} ball</div>
+      <div class="badges-row">${badgesRow(u)}</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px;">
       <div class="sc2"><div class="sn2" style="color:var(--green)">${u.wins||0}</div><div class="sl2">G'alaba</div></div>
@@ -485,6 +663,7 @@ async function loadProfile(){
       <div class="pname">${u.first_name||u.username||"?"}</div>
       <div style="font-size:11px;color:var(--muted);margin-top:1px;">@${u.username||"?"}</div>
       <div class="prank">${rank}/${total} o'rin · ${u.points||0} ball</div>
+      <div class="badges-row">${badgesRow(u)}</div>
     </div>
     <div class="sgrid">
       <div class="sc2"><div class="sn2" style="color:var(--gold)">${u.points||0}</div><div class="sl2">Ball</div></div>
@@ -494,6 +673,7 @@ async function loadProfile(){
     </div>
     <div class="card">
       <div class="ir"><span class="il">🏆 O'rin</span><span class="iv">${rank} / ${total}</span></div>
+      <div class="ir"><span class="il">🔥 Joriy ketma-ket g'alaba</span><span class="iv">${u.current_streak||0}</span></div>
       <div class="ir"><span class="il">🆔 Telegram ID</span><span class="iv">${u.id}</span></div>
       <div class="ir"><span class="il">📅 A'zo bo'lgan</span><span class="iv">${new Date(u.created_at).toLocaleDateString('uz')}</span></div>
     </div>`;
@@ -521,15 +701,21 @@ async function loadAdmin(){
  
 async function adminEndSeason(sid){
   if(!confirm(`${sid}-mavsumni yakunlashni tasdiqlaysizmi?`))return;
+  // TOP-1 nishonini joriy 1-o'rin egasiga beramiz
+  const top=await db("users","GET",null,"?order=points.desc&select=id,username&limit=1");
+  if(top&&top[0]){
+    await db("users","PATCH",{badge_top1:true},`?id=eq.${top[0].id}`);
+    showToast(`🏆 TOP-1 nishoni @${top[0].username} ga berildi!`);
+  }
   await db("seasons","PATCH",{status:"ended",ended_at:new Date().toISOString()},`?id=eq.${sid}`);
-  seasonEnded=true;renderHome();updateSeason();showToast(`🏁 ${sid}-mavsum yakunlandi!`);loadAdmin();
+  seasonEnded=true;renderHome();updateSeason();loadAdmin();
 }
 async function adminNewSeason(newSnum){
   if(!confirm(`${newSnum}-mavsumni boshlashni tasdiqlaysizmi?\nBarcha ratinglar 0 ga tushadi!`))return;
   await db("seasons","POST",{id:newSnum,status:"active",started_at:new Date().toISOString()});
-  // Reset users
+  // Reset users (nishonlar va o'zgarmas statistikalar SAQLANIB QOLADI, faqat ball/win/loss/streak 0 ga tushadi)
   const users=await db("users","GET",null,"?select=id");
-  for(const u of users) await db("users","PATCH",{points:0,wins:0,draws:0,losses:0},`?id=eq.${u.id}`);
+  for(const u of users) await db("users","PATCH",{points:0,wins:0,draws:0,losses:0,current_streak:0},`?id=eq.${u.id}`);
   await db("queue","DELETE",null,"?id=gt.0");
   snum=newSnum;seasonEnded=false;isReg=false;renderHome();updateSeason();
   showToast(`🚀 ${newSnum}-mavsum boshlandi!`);loadAdmin();
@@ -551,7 +737,7 @@ async function init(){
     const tg=window.Telegram.WebApp;tg.expand();tg.setHeaderColor("#0a0a0f");tg.setBackgroundColor("#0a0a0f");
     if(tg.initDataUnsafe&&tg.initDataUnsafe.user){
       tgUser=tg.initDataUnsafe.user;
-      await db("users","POST",{id:tgUser.id,username:tgUser.username||tgUser.first_name,first_name:tgUser.first_name||""});
+      await db("users","POST",{id:tgUser.id,username:tgUser.username||tgUser.first_name,first_name:tgUser.first_name||"",last_active:new Date().toISOString()});
     }
   }else{
     tgUser={id:1590570666,username:"admin",first_name:"Admin"};
@@ -561,12 +747,14 @@ async function init(){
     const u=await db("users","GET",null,`?id=eq.${tgUser.id}&select=photo_url`);
     const ph=u&&u[0]?u[0].photo_url:null;
     document.getElementById("tav").innerHTML=avEl(ph,tgUser.first_name,30);
-    if(tgUser.id===ADMIN_ID)document.getElementById("nb3").style.display="flex";
+    if(tgUser.id===ADMIN_ID)document.getElementById("nb4").style.display="flex";
     await loadHome();
   }
  
   updateSeason();setInterval(updateSeason,1000);
   setInterval(loadHome,20000);
+  setInterval(heartbeat,20000);
+  await heartbeat();
  
   clearInterval(iv);fill.style.width="100%";
   await new Promise(r=>setTimeout(r,300));
